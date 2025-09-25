@@ -90,12 +90,12 @@ public class NumberTriangle {
      */
     public int retrieve(String path) {
         // implement this method
-        if (this.isLeaf()) {
+        if (path.isEmpty()) {
             return this.getRoot();
         } else if (path.charAt(0) == 'l') {
-            return this.retrieve(path.substring(1));
+            return this.left.retrieve(path.substring(1));
         } else { // if (path.charAt(0) == 'r')
-            return this.retrieve(path.substring(1));
+            return this.right.retrieve(path.substring(1));
         }
     }
 
@@ -126,9 +126,6 @@ public class NumberTriangle {
         String line = br.readLine();
         while (line != null) {
 
-            // remove when done; this line is included so running starter code prints the contents of the file
-            System.out.println(line);
-
             // process the line
             String[] numbers = line.split(" ");
             List<NumberTriangle> currentRow = new ArrayList<>();
@@ -139,7 +136,7 @@ public class NumberTriangle {
             if (previousRow != null) {
                 for (int i = 0; i < previousRow.size(); i++) {
                     previousRow.get(i).setLeft(currentRow.get(i));
-                    previousRow.get(i).setRight(currentRow.get(i++));
+                    previousRow.get(i).setRight(currentRow.get(++i));
                 }
             } else {
                 top = currentRow.get(0);
